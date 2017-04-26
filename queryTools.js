@@ -17,7 +17,7 @@ var createQuery = function(col) {
 
 var printData = function(res, col) {
     // Get length of column header
-    console.log(res);
+    // console.log(res);
     var colLengths = [];
     for (var h = 0; h < col.length; h++) {
         colLengths.push(col[h].split('').length);
