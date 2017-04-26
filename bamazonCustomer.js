@@ -56,15 +56,15 @@ var chooseItem = function(max) {
 };
 
 var checkQuantity = function(answer) {
-    var query = 'SELECT StockQuantity, Price, DepartmentName FROM products WHERE itemID = ?';
+    var query = 'SELECT StockQuantity, Price, DepartmentName FROM products WHERE ItemID = ?';
     var params = answer.id;
     connection.query(query, params, function(err, res) {
-        if (res[0].stockQuantity < answer.quantity) {
+        if (res[0].StockQuantity < answer.quantity) {
             console.log(chalk.bold.red('Insufficient quantity.  Please select a quantity equal to or below ' + res[0].StockQuantity) + '.');
             chooseItem(max);
         } else {
             var total = answer.quantity * res[0].Price;
-            var newQuantity = res.StockQuantity - answer.quantity;
+            var newQuantity = res[0].StockQuantity - answer.quantity;
             updateQuantity(answer.id, total, newQuantity);
             queryTotal(res[0].DepartmentName, total);
         }
@@ -81,7 +81,7 @@ var updateQuantity = function(id, total, newQuantity) {
 };
 
 var queryTotal = function(deptName, total) {
-    var query = 'SELECT ProductSales FROM Departments WHERE DepartmentName = ?';
+    var query = 'SELECT ProductSales FROM departments WHERE DepartmentName = ?';
     var params = deptName;
     connection.query(query, params, function(err, res) {
         updateTotal(res, deptName, total);
@@ -90,7 +90,7 @@ var queryTotal = function(deptName, total) {
 
 var updateTotal = function(res, deptName, total) {
     var prodSales = res[0].ProductSales + total;
-    var query = 'UPDATE Departments SET ProductSales = ? WHERE DepartmentName = ?';
+    var query = 'UPDATE departments SET ProductSales = ? WHERE DepartmentName = ?';
     var params = [prodSales, deptName];
     connection.query(query, params, function(err, res) {
         connection.end();
