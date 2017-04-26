@@ -27,7 +27,7 @@ var start = function() {
         choices: [
             '1) View Products for Sale',
             '2) View Low Inventory',
-            '3) Add to Inventory',
+            '3) Add to Existing Inventory',
             '4) Add New Product'
         ]
     }]).then(function(answers) {
