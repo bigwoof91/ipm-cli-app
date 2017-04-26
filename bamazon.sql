@@ -1,7 +1,7 @@
 CREATE DATABASE Bamazon;
 USE Bamazon;
 
-CREATE TABLE Products (
+CREATE TABLE products (
 	ItemID INT(11) UNSIGNED AUTO_INCREMENT NOT NULL,
     ProductName VARCHAR(255) NOT NULL,
     DepartmentName VARCHAR(255) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Products (
     PRIMARY KEY(ItemID)
 );
 
-INSERT INTO Products 
+INSERT INTO products 
 	(ProductName,DepartmentName,Price,StockQuantity)
 
 VALUES
@@ -25,7 +25,7 @@ VALUES
 ("Ooma Telo Free Home Phone Service", "Office Products", 80.00, 200), 
 ("Ooma Freedom DECT Headset", "Office Products", 79.00, 200);
     
-CREATE TABLE Departments (
+CREATE TABLE departments (
 	DepartmentID INT(10) UNSIGNED AUTO_INCREMENT NOT NULL,
     DepartmentName VARCHAR(255) NOT NULL,
     OverheadCosts DECIMAL(10,2) DEFAULT 0.00 NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE Departments (
     PRIMARY KEY(DepartmentID)
 );
 
-INSERT INTO Departments 
+INSERT INTO departments 
 	(DepartmentName,OverHeadCosts)
 VALUES
 	('Cleaning Products',100),

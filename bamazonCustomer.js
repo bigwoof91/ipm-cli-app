@@ -17,7 +17,7 @@ connection.connect(function(err) {
     start();
 });
 
-var max, col = ['item_id', 'product_name', 'price'];
+var max, col = ['ItemID', 'ProductName', 'Price'];
 
 var start = function() {
     // Select all rows of columns desired and print
@@ -29,7 +29,7 @@ var start = function() {
 
 var handleQuery = function(res) {
     Bamazon.printData(res, col);
-    max = res[res.length - 1]['item_id'];
+    max = res[res.length - 1]['ItemID'];
     chooseItem(max);
 };
 
@@ -37,7 +37,7 @@ var chooseItem = function(max) {
     inquirer.prompt([{
         name: "id",
         type: "input",
-        message: "What is the item ID of the product you would like to buy?",
+        message: "What is the Item ID of the product you would like to buy?",
         validate: function(value) {
             if (value >= 0 && value <= max && value % 1 === 0 && value.indexOf(' ') < 0 && value.indexOf('.') < 0) {
                 return true;
@@ -56,23 +56,23 @@ var chooseItem = function(max) {
 };
 
 var checkQuantity = function(answer) {
-    var query = 'SELECT stock_quantity, Price, department_name FROM products WHERE item_id = ?';
+    var query = 'SELECT StockQuantity, Price, DepartmentName FROM products WHERE itemID = ?';
     var params = answer.id;
     connection.query(query, params, function(err, res) {
-        if (res[0].stock_quantity < answer.quantity) {
-            console.log(chalk.bold.red('Insufficient quantity.  Please select a quantity equal to or below ' + res[0].stock_quantity) + '.');
+        if (res[0].stockQuantity < answer.quantity) {
+            console.log(chalk.bold.red('Insufficient quantity.  Please select a quantity equal to or below ' + res[0].StockQuantity) + '.');
             chooseItem(max);
         } else {
             var total = answer.quantity * res[0].Price;
-            var newQuantity = res[0].stock_quantity - answer.quantity;
+            var newQuantity = res.StockQuantity - answer.quantity;
             updateQuantity(answer.id, total, newQuantity);
-            queryTotal(res[0].department_name, total);
+            queryTotal(res[0].DepartmentName, total);
         }
     });
 };
 
 var updateQuantity = function(id, total, newQuantity) {
-    var query = 'UPDATE products SET stock_quantity = ? WHERE ItemID = ?';
+    var query = 'UPDATE products SET StockQuantity = ? WHERE ItemID = ?';
     var params = [newQuantity, id];
     connection.query(query, params, function(err, res) {
         console.log(chalk.bold.blue('\nTotal cost: ') + chalk.bold.yellow(accounting.formatMoney(total)));
@@ -81,7 +81,7 @@ var updateQuantity = function(id, total, newQuantity) {
 };
 
 var queryTotal = function(deptName, total) {
-    var query = 'SELECT ProductSales FROM Departments WHERE department_name = ?';
+    var query = 'SELECT ProductSales FROM Departments WHERE DepartmentName = ?';
     var params = deptName;
     connection.query(query, params, function(err, res) {
         updateTotal(res, deptName, total);
@@ -90,7 +90,7 @@ var queryTotal = function(deptName, total) {
 
 var updateTotal = function(res, deptName, total) {
     var prodSales = res[0].ProductSales + total;
-    var query = 'UPDATE Departments SET ProductSales = ? WHERE department_name = ?';
+    var query = 'UPDATE Departments SET ProductSales = ? WHERE DepartmentName = ?';
     var params = [prodSales, deptName];
     connection.query(query, params, function(err, res) {
         connection.end();

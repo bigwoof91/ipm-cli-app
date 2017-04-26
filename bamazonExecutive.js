@@ -74,7 +74,7 @@ var viewProducts = function() {
 var createDept = function() {
     // Callback once answers are entered
     var insertQuery = function(answers) {
-        var query = 'INSERT INTO Departments (DepartmentName,OverHeadCosts) VALUES (?,?)';
+        var query = 'INSERT INTO departments (DepartmentName,OverHeadCosts) VALUES (?,?)';
         var formatPrice = accounting.formatMoney(answers.overhead, "", 2, "", ".");
         var params = [answers.deptname, formatPrice];
         sendQuery(query, confirmed, params);

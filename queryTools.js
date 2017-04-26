@@ -17,6 +17,7 @@ var createQuery = function(col) {
 
 var printData = function(res, col) {
     // Get length of column header
+    console.log(res);
     var colLengths = [];
     for (var h = 0; h < col.length; h++) {
         colLengths.push(col[h].split('').length);
@@ -29,8 +30,10 @@ var printData = function(res, col) {
             // Check to see if datatype is number, if so turn to string
             if (typeof res[i][col[j]] === 'number') {
                 // If price, overhead, sales, or profit add $ and format properly
-                if (col[j] === 'Price' || col[j] === 'Overhead Costs' || col[j] === 'Product Sales' || col[j] === 'Total Profit') res[i][col[j]] = accounting.formatMoney(res[i][col[j]]);
-                length = res[i][col[j]].toString().split('').length;
+                if (col[j] === 'Price' || col[j] === 'Overhead Costs' || col[j] === 'Product Sales' || col[j] === 'Total Profit') {
+                    res[i][col[j]] = accounting.formatMoney(res[i][col[j]]);
+                    length = res[i][col[j]].toString().split('').length;
+                }
             } else {
                 length = res[i][col[j]].split('').length;
             }

@@ -49,7 +49,7 @@ var start = function() {
 };
 
 // Select columns you want to show
-var col = ['Item ID', 'Product Name', 'Price', 'Stock Quantity'];
+var col = ['ItemID', 'ProductName', 'Price', 'StockQuantity'];
 
 // Query
 var sendQuery = function(query, callback, params) {
@@ -92,7 +92,7 @@ var addInvent = function() {
     // Calback after query of id is done
     var updateQuantity = function(res) {
         var quantity = res[0]['StockQuantity'] + inputQuantity;
-        var query = 'UPDATE Products SET StockQuantity = ? WHERE ItemID = ?';
+        var query = 'UPDATE products SET StockQuantity = ? WHERE ItemID = ?';
         var params = [quantity, res[0]['ItemID']];
         sendQuery(query, confirmed, params);
     };
@@ -120,7 +120,7 @@ var addInvent = function() {
 var addProducts = function() {
     // Callback once answers are entered
     var insertQuery = function(answers) {
-        var query = 'INSERT INTO Products (ProductName,DepartmentName,Price,StockQuantity) VALUES (?,?,?,?)';
+        var query = 'INSERT INTO products (ProductName, DepartmentName, Price, StockQuantity) VALUES (?,?,?,?)';
         var formatPrice = accounting.formatMoney(answers.price, "", 2, "", ".");
         var params = [answers.name, answers.deptname, formatPrice, Number(answers.quantity)];
         sendQuery(query, confirmed, params);
