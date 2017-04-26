@@ -38,7 +38,7 @@ var start = function() {
             case '2) View Low Inventory':
                 viewLowInvent();
                 break;
-            case '3) Add to Inventory':
+            case '3) Add to Existing Inventory':
                 addInvent();
                 break;
             case '4) Add New Product':
