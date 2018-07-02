@@ -1,4 +1,4 @@
-CREATE DATABASE Bamazon;
+CREATE DATABASE IPM_CLI;
 USE Bamazon;
 
 CREATE TABLE products (
